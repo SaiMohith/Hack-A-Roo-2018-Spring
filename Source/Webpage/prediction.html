@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="An Opioid Data Visualization">
+    <meta name="author" content="MachineBreakers">
+
+    <title>Predictive Analysis</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Load c3.css -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel="stylesheet" type="text/css"/>
+    <!--Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet">
+    <!-- Custom styles-->
+    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <script type="text/javascript" src="jquery-1.11.2.js"></script>
+    <script type="text/javascript" src="bootstrap.js"></script>
+
+
+    <!-- This is the CSS for the 'Prescriber' and 'Reseacher' buttons, paragraph padding, and links-->
+    <style>
+
+        table, th, td {
+            border: 1px solid gold;
+            color: white;
+            text-align: center;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 5px;
+        }
+
+        /* Clear floats after image containers */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .p {
+            text-indent: 50px;
+            padding-top: 50px;
+            padding-right: 30px;
+            padding-bottom: 50px;
+            padding-left: 80px;
+            font-size: 24;
+        }
+
+        .wrapper{
+            text-align: center;
+        }
+
+        img{
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 60px;
+            padding-right: 40px;
+            margin: 0 auto;
+        }
+
+        .article {
+            color:#00AEF5;
+            text-decoration-line: underline;
+        }
+
+        .article:visited {
+            color:#00AEF5;
+            text-decoration-line: underline;
+        }
+        .article:active{
+            color:#00AEF5;
+            text-decoration-line: underline;
+        }
+
+        .article:focus{
+            color:#00AEF5;
+            text-decoration-line: underline;
+        }
+
+        .article.hover{
+            color:#00AEF5;
+            text-decoration-line: underline;
+        }
+
+        #toolslist{
+
+            color: goldenrod;
+            type: "1";
+
+        }
+
+        .col-md-3{
+
+            text-align: center;
+        }
+
+        #chart {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #chart:hover {opacity: 0.7;}
+
+        .my-img a {
+            display: inline-block;
+            margin: 10px;
+            border: 2px solid #CCC;
+        }
+        .my-img a:hover {
+            border: 2px solid #45AFFF;
+        }
+        .modal-lg {
+            width: 86%;
+        }
+        .modal-body {
+            overflow: auto;
+            max-height: auto;
+        }
+
+    </style>
+    <!-- End of additional CSS -->
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-fixed-top">
+
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">MachineBreakers</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse" style="float: right;">
+            <ul class="nav navbar-nav" >
+                <li><a href="index.html">Home</a></li>
+                <li ><a href="analysis.html">Statewide Analysis</a></li>
+                <li class="active"><a href="prediction.html">Prediction</a></li>
+                <li><a href="Data%20Mining.html">Twitter Data</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div><!--/.nav-collapse-->
+    </div>
+</nav>
+
+<!-- Beginning of Webpage Content-->
+
+<!-- Make sure to seperate both sections using bootstrap and seperate each section using row 6 column 6 (Make sure that row + column = 12) Check the bootstrap documentation  -->
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <!-- Title of page -->
+
+        <h1>A Prediction of Opioid Overdose</h1>
+
+        <p>Using the datasets, we tried to predict the different values for upcoming years using Linear Regression Model.</p>
+        <p>Below are the different graphs we used to predict the values</p>
+
+        <div class="container">
+            <!-- Trigger the modal with a button -->
+            <div class="row">
+                <div class="col-xs-12 my-img">
+                    <a href="#" id="chart" data-toggle="modal" data-target="#myModal">
+                        <img src="predictions/1.jpeg" id="img1" class="img-responsive" width="250px">
+                    </a>
+                    <a href="#" id="chart" data-toggle="modal" data-target="#myModal">
+                        <img src="predictions/2.jpeg" id="img2" class="img-responsive" width="250px">
+                    </a>
+                    <a href="#" id="chart" data-toggle="modal" data-target="#myModal">
+                        <img src="predictions/3.jpeg" id="img3" class="img-responsive" width="250px">
+                    </a>
+                    <a href="#" id="chart" data-toggle="modal" data-target="#myModal">
+                        <img src="predictions/4.jpeg" id="img4" class="img-responsive" width="250px">
+                    </a>
+                    <a href="#" id="chart" data-toggle="modal" data-target="#myModal">
+                        <img src="predictions/5.jpeg" id="img5" class="img-responsive" width="250px">
+                    </a>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body" id="showImg">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+
+            <h2>Prediction Tables</h2>
+            <p>Formula Used: glm(formula = Value ~ Race.Ethnicity, family = "binomial", data = ethin)</p>
+
+            <h3 style="color: white">Deviance Residuals: </h3>
+            <table style="width: 100%">
+
+                <tr>
+                    <th>Min</th>
+                    <th>1Q</th>
+                    <th>Median</th>
+                    <th>3Q</th>
+                    <th>Mean</th>
+
+                </tr>
+
+                <tr>
+                    <td>-2.8930</td>
+                    <td>0.1752</td>
+                    <td>0.1752</td>
+                    <td>0.3749</td>
+                    <td>0.8271</td>
+                </tr>
+
+            </table>
+
+            <h3 style="color: white">Summary</h3>
+            <table>
+
+                <tr>
+                    <th>Coefficients</th>
+                    <th>Estimate</th>
+                    <th>Std. Error</th>
+                    <th>Z Value</th>
+                    <th>Pr(>|z|)</th>
+
+                </tr>
+
+                <tr>
+                    <td>Intercept</td>
+                    <td>4.16950</td>
+                    <td>0.08456</td>
+                    <td>49.306</td>
+                    <td><2e-16</td>
+                </tr>
+
+                <tr>
+                    <td>Ethnicity: American Indian/Alaska Native</td>
+                    <td>-1.81423</td>
+                    <td>0.15843</td>
+                    <td>-11.451</td>
+                    <td><2e-16</td>
+                </tr>
+
+                <tr>
+                    <td>Ethnicity: Asian/PI</td>
+                    <td>-2.31933</td>
+                    <td>0.10725</td>
+                    <td>-21.626</td>
+                    <td><2e-16</td>
+                </tr>
+
+                <tr>
+                    <td>Ethnicity: Black</td>
+                    <td>-.54940</td>
+                    <td>0.11261</td>
+                    <td>-13.759</td>
+                    <td><2e-16</td>
+                </tr>
+
+                <tr>
+                    <td>Ethnicity: Hispanic</td>
+                    <td>1.46992</td>
+                    <td>0.11653</td>
+                    <td>-12.614</td>
+                    <td><2e-16</td>
+                </tr>
+
+                <tr>
+                    <td>Ethnicity: Multiracial</td>
+                    <td>13.39657</td>
+                    <td>171.84551</td>
+                    <td>0.078</td>
+                    <td>0</td>
+                </tr>
+
+                <tr>
+                    <td>Ethnicity: Other</td>
+                    <td>-3.27247</td>
+                    <td>0.11012</td>
+                    <td>-29.718</td>
+                    <td><2e-16</td>
+                </tr>
+
+                <tr>
+                    <td>White</td>
+                    <td>-1.14764</td>
+                    <td>0.12191</td>
+                    <td>-9.414</td>
+                    <td><2e-16</td>
+                </tr>
+
+
+            </table>
+            <br><br>
+
+            <p>Null deviance: 9576.5  on 21917  degrees of freedom</p>
+            <p>Residual deviance: 8375.4  on 21910  degrees of freedom</p>
+            <p>AIC: 8391.4</p>
+            <p>Number of Fisher Scoring iterations: 16</p>
+
+        </div>
+
+
+        <h3 style="color: white">Prediction Graph</h3>
+        <p>Below is the graph we plotted to predict the future values: </p>
+
+        <img style="float: inside" src="predictions/forecast_graph.jpeg">
+
+        <h3 style="color: white">Prediction Table</h3>
+        <p>Based on the graph below are the values for each year (Upto 2021)</p>
+
+        <table style="margin-left: 30%">
+
+            <tr>
+                <th>Year</th>
+                <th>Value</th>
+            </tr>
+
+            <tr>
+
+                <td>2018</td>
+                <td>2110</td>
+
+            </tr>
+
+            <tr>
+
+                <td>2019</td>
+                <td>2500</td>
+
+            </tr>
+
+            <tr>
+
+                <td>2020</td>
+                <td>2800</td>
+
+            </tr>
+
+            <tr>
+
+                <td>2021</td>
+                <td>3200</td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+    </div><!-- /.row -->
+</div><!-- /.container-fluid -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!--Bootstrap JS-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Load d3.js and c3.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('img').on('click', function() {
+            $("#showImg").empty();
+            var image = $(this).attr("src");
+            $("#showImg").append("<img class='img-responsive' src='" + image + "' />")
+        })
+    });
+
+</script>
+
+</body>
+</html>

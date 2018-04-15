@@ -1,0 +1,37 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww28600\viewh15340\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 # BCHI Starts Here\
+bchi_year_sum <- ddply(bchi, .(Year), numcolwise(sum))\
+ write.csv(bchi_year_sum, "bchi_year_sum.csv")\
+ bchi_ethnicity_sum <- ddply(bchi, .(Race.Ethnicity), numcolwise(sum))\
+ write.csv(bchi_ethnicity_sum, "bchi_ethnicity_sum.csv")\
+ write.csv(subset(bchi_ethnicity_sum, select = c(Race.Ethnicity, Value)), "bchi_ethnicity_sum.csv")\
+ bchi_sex_sum <- ddply(bchi, .(Sex), numcolwise(sum))\
+ write.csv(subset(bchi_sex_sum, select = c(Sex, Value)), "bchi_sex_value.csv")\
+ bchi_place_sum <- ddply(bchi, .(Place), numcolwise(sum))\
+ write.csv(subset(bchi_place_sum, select = c(Place, Value)), "bchi_place_sum.csv")\
+ bchi_value_grtr_25 <- subset(bchi, select = c(Indicator.Category, Year, Sex, Race.Ethnicity, Place), Value25)\
+ write.csv(bchi_value_grtr_25, "bchi_value_grtr_25.csv")\
+ bchi_value_less_3 <- subset(bchi, select = c(Indicator.Category, Year, Sex, Race.Ethnicity, Place), Value<=3)\
+ write.csv(bchi_value_less_3, "bchi_value_less_3.csv")\
+#BCHI Ends Here\
+\
+#VSSR Starts Here\
+ vssr <- read.csv("VSSR_Opiod.csv")\
+ vssr_statename_sum <- ddply(vssr, .(State.Name), numcolwise(sum))\
+ write.csv(subset(vssr_statename_sum, select = c(State.Name, Data.Value)), "vssr_statename_sum.csv")\
+ vssr_year_sum = ddply(vssr, .(Year), numcolwise(sum))\
+ write.csv(subset(vssr_year_sum, select = c(Year, Data.Value)), "vssr_year_sum.csv")\
+ vssr_indicator_sum <- ddply(vssr, .(Indicator), numcolwise(sum))\
+ write.csv(subset(vssr_indicator_sum, select = c(Indicator, Data.Value)), "vssr_indicator_sum.csv")\
+write.csv(subset(vssr_month_sum, select = c(Month, Data.Value)), "vssr_month_sum.csv")\
+vssr_grtr_25k <- subset(vssr, select = c(Indicator, State.Name, Year, Month, Data.Value), Data.Value>25000)\
+write.csv(vssr_grtr_25k, "vssr_grtr_25k.csv")\
+vssr_least_value <- vssr[which.min(vssr$Data.Value),]\
+write.csv(vssr_least_value, "vssr_least_value.csv")\
+#VSSR Ends Here}

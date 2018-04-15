@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="An Opioid Data Visualization">
+    <meta name="author" content="MachineBreakers">
+
+    <title>The Opioid Epidemic Analysis</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!--Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet">
+    <!-- Custom styles-->
+    <link href="style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-fixed-top">
+
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">MachineBreakers</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse" style="float: right;">
+            <ul class="nav navbar-nav" >
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="analysis.html">Statewide Analysis</a></li>
+                <li><a href="prediction.html">Prediction</a></li>
+                <li><a href="Data%20Mining.html">Twitter Data</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div><!--/.nav-collapse-->
+    </div>
+
+</nav>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <section class="col-md-3 filter-section">
+            <ul class="dataFilters">
+
+                <a href="#" ><li class="selected-data" onclick="blank();" id="overdose">Click below for Overdose Visualizations</li></a>
+                <a href="#" onclick="year();"><li id="year">Year</li></a>
+                <a href="#" onclick="month();"><li id="month">Month</li></a>
+                <a href="#" onclick="gender();"><li id="gender">Gender (Only for 2015)</li></a>
+                <a href="#" onclick="ethnicity();"><li id="gender">Race/Ethnicity</li></a>
+                <a href="#" onclick="opioid_type();"><li id="opioid-type">Opioid Type</li></a>
+            </ul>
+        </section>
+
+
+        <section class="col-md-9 chart-section visualization">
+
+            <h1 id="chart-title" style="color:#fff;"></h1>
+
+            <img id="chart" style="padding-left: 10px; display: none; margin-left: 80px;"></img>
+
+        </section>
+
+        <div class="col-md-10" style="display: none">
+
+            <h1 id="para-title" style="color:#fff;"></h1>
+
+            <p id="para" style="padding-left: 10px; display: none; margin-left: 80px;"></p>
+
+        </div>
+
+
+        <!--Adding Modal Function to the images-->
+
+
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <span class="close">&times;</span>
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="graph">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+
+    </div><!-- /.row -->
+</div><!-- /.container-fluid -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!--Bootstrap JS-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!--jQuery parse CSV-->
+<script src="scripts/jquery-csv.min.js"></script>
+<!-- Load d3.js and c3.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+
+<script type="text/javascript">
+
+function ethnicity() {
+
+    var eth_head = "New York State Opioid Crisis (2015-2017)"
+    var eth = "graphs/Ethnicity.png"
+
+    document.getElementById('chart-title').innerText = eth_head.replace();
+    document.getElementById('chart').src = eth.replace();
+    document.getElementById('chart').style.display = "block";
+
+}
+
+function year()
+{
+
+    var yr_head = "New York State Opioid Crisis (2015-2017)"
+    var yr = "graphs/Year.png"
+
+    document.getElementById('chart-title').innerText = yr_head.replace();
+    document.getElementById('chart').src = yr.replace();
+    document.getElementById('chart').style.display = "block";
+
+}
+
+function month()
+{
+
+    var mth = "graphs/Month.png"
+    var mth_head = "New York State Opioid Crisis (2015-2017)"
+
+    document.getElementById('chart-title').innerText = mth_head.replace();
+    document.getElementById('chart').src = mth.replace();
+    document.getElementById('chart').style.display = "block";
+
+}
+
+function gender()
+{
+
+    var gender = "graphs/gender.png"
+    var gender_head = "New York State Opioid Crisis (2015-2017)"
+
+    document.getElementById('chart').src = gender.replace();
+    document.getElementById('chart-title').innerText = gender_head.replace();
+    document.getElementById('chart').style.display = "block";
+
+}
+
+function opioid_type()
+{
+
+    var indicator = "graphs/Indicator.png"
+    var indicator_head = "New York State Opioid Crisis (2015-2017)"
+
+    document.getElementById('chart').src = indicator.replace();
+    document.getElementById('chart-title').innerText = indicator_head.replace();
+    document.getElementById('chart').style.display = "block";
+
+}
+
+var modal = document.getElementById('myModal');
+
+var img = document.getElementById('chart');
+var modalImg = document.getElementById('graph');
+var captionText = document.getElementById('caption');
+img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+}
+
+var span = document.getElementsByClassName('close')[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+</script>
+</body>
+</html>

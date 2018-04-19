@@ -20,12 +20,13 @@
     <!-- Custom styles-->
     <link href="style.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.css" />
     <script type="text/javascript" src="jquery-1.11.2.js"></script>
     <script type="text/javascript" src="bootstrap.js"></script>
 
 
     <!-- This is the CSS for the 'Prescriber' and 'Reseacher' buttons, paragraph padding, and links-->
-    <style>
+    <style type="text/css">
 
         table, th, td {
             border: 1px solid gold;
@@ -68,7 +69,7 @@
         }
 
         .article {
-            color:#00AEF5;
+            color: #00AEF5;
             text-decoration-line: underline;
         }
 
@@ -127,6 +128,16 @@
             max-height: auto;
         }
 
+        a.fancybox img {
+            border: none;
+            box-shadow: 0 1px 7px rgba(0,0,0,0.6);
+            -o-transform: scale(1,1); -ms-transform: scale(1,1); -moz-transform: scale(1,1); -webkit-transform: scale(1,1); transform: scale(1,1); -o-transition: all 0.2s ease-in-out; -ms-transition: all 0.2s ease-in-out; -moz-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out;
+        }
+        a.fancybox:hover img {
+            position: relative; z-index: 999; -o-transform: scale(1.03,1.03); -ms-transform: scale(1.03,1.03); -moz-transform: scale(1.03,1.03); -webkit-transform: scale(1.03,1.03); transform: scale(1.03,1.03);
+        }
+
+
     </style>
     <!-- End of additional CSS -->
 
@@ -174,7 +185,7 @@
             <!-- Trigger the modal with a button -->
             <div class="row">
                 <div class="col-xs-12 my-img">
-                    <a href="#" id="chart" data-toggle="modal" data-target="#myModal">
+                    <!--<a href="#" id="chart" data-toggle="modal" data-target="#myModal">
                         <img src="predictions/1.jpeg" id="img1" class="img-responsive" width="250px">
                     </a>
                     <a href="#" id="chart" data-toggle="modal" data-target="#myModal">
@@ -188,7 +199,18 @@
                     </a>
                     <a href="#" id="chart" data-toggle="modal" data-target="#myModal">
                         <img src="predictions/5.jpeg" id="img5" class="img-responsive" width="250px">
-                    </a>
+                    </a>-->
+                    <img src="predictions/1.jpeg" id="img1" class="fancybox" width="250px">
+
+                    <img src="predictions/2.jpeg" id="img2" class="fancybox" width="250px">
+
+                    <img src="predictions/3.jpeg" id="img3" class="fancybox" width="250px">
+
+                    <img src="predictions/4.jpeg" id="img4" class="fancybox" width="250px">
+
+                    <img src="predictions/5.jpeg" id="img5" class="fancybox" width="250px">
+
+
                 </div>
 
                 <!-- Modal -->
@@ -394,16 +416,40 @@
 <!-- Load d3.js and c3.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
 
 <script type="text/javascript">
 
-    $(document).ready(function() {
+    /*$(document).ready(function() {
         $('img').on('click', function() {
             $("#showImg").empty();
             var image = $(this).attr("src");
             $("#showImg").append("<img class='img-responsive' src='" + image + "' />")
         })
+    });*/
+
+    $(function($){
+        var addToAll = true;
+        var gallery = true;
+        var titlePosition = 'inside';
+        $(addToAll ? 'img' : 'img.fancybox').each(function(){
+            var $this = $(this);
+            var title = $this.attr('title');
+            var src = $this.attr('data-big') || $this.attr('src');
+            var a = $('<a href="#" class="fancybox"></a>').attr('href', src).attr('title', title);
+            $this.wrap(a);
+        });
+        if (gallery)
+            $('a.fancybox').attr('rel', 'fancyboxgallery');
+        $('a.fancybox').fancybox({
+            titlePosition: titlePosition
+        });
     });
+    $.noConflict();
 
 </script>
 
